@@ -1,4 +1,4 @@
-workspace "Pong-OpenGL"
+workspace "Pong"
 	architecture "x64"
 
 	configurations
@@ -19,8 +19,8 @@ include "vendor/GLFW"
 include "vendor/Glad"
 include "vendor/imgui"
 
-project "Pong-OpenGL"
-	location "Pong-OpenGL"
+project "Pong"
+	location "Pong"
 	kind "ConsoleApp"
 	language "C++"
 
