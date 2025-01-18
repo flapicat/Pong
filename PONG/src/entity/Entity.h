@@ -19,8 +19,6 @@ public:
 	void setPosition(glm::vec3 pos);
 	glm::vec3 getPosition();
 
-	virtual void OnUpdate() = 0;
-
 	virtual void render(Shader& shader) = 0;
 protected:
 	render::VAO vao;

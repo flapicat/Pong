@@ -11,7 +11,7 @@ void Player::init()
 	vao.bind();
 
 	vbo.linkVBO(vertices, sizeof(vertices));
-	ebo.attachIndices(indices, sizeof(indices));
+	ebo.attachIndices(m_indices, sizeof(m_indices));
 
 	vao.linkVBO(vbo, 0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
 
@@ -22,30 +22,39 @@ void Player::processInput(MOVES action, float deltaTme)
 {
 	if (action == UP)
 	{
-		m_position.y += 1 * speed * deltaTme;
+		m_position.y += 1 * m_speed * deltaTme;
 	}
 	if (action == DOWN)
 	{
-		m_position.y += -1 * speed * deltaTme;
+		m_position.y += -1 * m_speed * deltaTme;
 	}
 }
 
 void Player::OnUpdate()
 {
-	windowCollision();
-	//std::cout << "POSITION: " << m_position.x << ", " << m_position.y << ", " << m_position.z << "\n ";
+	windowCollision(); 
 }
 
 void Player::windowCollision()
 {
-	if (m_position.y >= 1 - height /2)
+	if (m_position.y >= 1 - m_height /2)
 	{
-		m_position.y = 1 - height / 2;
+		m_position.y = 1 - m_height / 2;
 	}
-	if (m_position.y <= -1 + height / 2)
+	if (m_position.y <= -1 + m_height / 2)
 	{
-		m_position.y = -1 + height / 2;
+		m_position.y = -1 + m_height / 2;
 	}
+}
+
+int Player::getScore()
+{
+	return m_score;
+}
+
+void Player::addScore()
+{
+	m_score++;
 }
 
 void Player::render(Shader& shader)
