@@ -9,6 +9,8 @@ public:
     void init();
 
     void OnUpdate(float deltaTime);
+    void windowCollision();
+
     float getVelX();
     float getVelY();
     void swapVelX();
@@ -23,7 +25,6 @@ public:
 
     float m_height = 0.1f;
 private:
-    void windowCollision();
 private:
     bool m_leftCOL, m_rightCOL;
     float m_velocityX = 1,m_velocityY= 1;

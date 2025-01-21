@@ -48,8 +48,8 @@ void Window::OnUpdate()
 
 void Window::createWindow()
 {
-	m_Data.width = 1280;
-	m_Data.height = 720;
+	m_Data.width = 1920;
+	m_Data.height = 1080;
 	m_Data.title = "PONG";
 	m_Data.VSync = true;
 	

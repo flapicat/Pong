@@ -35,6 +35,7 @@
     <ClInclude Include="src\render\VBO.h">
       <Filter>render</Filter>
     </ClInclude>
+    <ClInclude Include="src\TextClass.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\App.cpp" />
@@ -64,5 +65,12 @@
     <ClCompile Include="src\render\VBO.cpp">
       <Filter>render</Filter>
     </ClCompile>
+    <ClCompile Include="src\TextClass.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="src\render\shaders\shader.frag" />
+    <None Include="src\render\shaders\shader.vert" />
+    <None Include="src\render\shaders\Text.vert" />
+    <None Include="src\render\shaders\Text.frag" />
   </ItemGroup>
 </Project>

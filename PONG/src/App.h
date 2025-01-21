@@ -1,5 +1,7 @@
 #pragma once
 
+#include <map>
+#include <string>
 #include <memory>
 #include <chrono>
 
@@ -13,6 +15,11 @@
 #include "entity/Player.h"
 #include "entity/UI.h"
 
+#include <ft2build.h>
+#include FT_FREETYPE_H
+
+#include "TextClass.h"
+
 class App
 {
 public:
@@ -24,6 +31,7 @@ public:
 	void input(GLFWwindow* window);
 	void chectCollision(Ball* ball, Player* player);
 private:
+	bool gameEnd = false;
 	void GameLogic();
 	bool m_count = false;
 	float m_timer = 0;
@@ -31,7 +39,10 @@ private:
 	glm::mat4 m_projection;
 	float m_deltaTime = 0, m_lastFrame = 0;
 
+	TextClass textClass;
 	Shader shader;
+	Shader shaderText;
+
 	Window m_window;
 
 	UI ui;
@@ -40,4 +51,3 @@ private:
 	Player player2;
 	Ball ball;
 };
-

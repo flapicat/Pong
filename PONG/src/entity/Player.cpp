@@ -30,11 +30,6 @@ void Player::processInput(MOVES action, float deltaTme)
 	}
 }
 
-void Player::OnUpdate()
-{
-	windowCollision(); 
-}
-
 void Player::windowCollision()
 {
 	if (m_position.y >= 1 - m_height /2)

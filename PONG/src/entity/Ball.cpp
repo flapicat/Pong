@@ -22,8 +22,6 @@ void Ball::OnUpdate(float deltaTime)
 {
 	m_position.x += m_velocityX * m_speed * deltaTime;
 	m_position.y += m_velocityY * m_speed * deltaTime;
-
-	windowCollision();
 }
 
 float Ball::getVelX()

@@ -16,7 +16,6 @@ public:
 	void init();
 
     void processInput(MOVES action,float deltaTme);
-	void OnUpdate();
     void windowCollision();
 
     int getScore();
@@ -26,7 +25,7 @@ public:
     float m_width = 0.03f;
     float m_height = 0.6f;
 private:
-    int m_score = 0; 
+    int m_score = -1; 
     float m_speed = 3;
 
 
