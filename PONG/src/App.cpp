@@ -24,11 +24,17 @@ void App::start()
 		std::cout << "FAILED TO INIT GLAD\n";
 		exit(-1);
 	}
+
 	glEnable(GL_DEPTH_BUFFER_BIT);
 	glEnable(GL_CULL_FACE);
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
+	shaderText.CompileShader("src/render/shaders/Text.vert", "src/render/shaders/Text.frag");
+	glm::mat4 projection = glm::ortho(0.0f, static_cast<float>(m_window.getWidth()), 0.0f, static_cast<float>(m_window.getHeight()));
+	shaderText.use();
+	glUniformMatrix4fv(glGetUniformLocation(shaderText.ID, "projection"), 1, GL_FALSE, glm::value_ptr(projection));
+	textClass.init("res/font/Orange Kid.otf", 250);
 
 	shader.CompileShader("src/render/shaders/shader.vert", "src/render/shaders/shader.frag");
 	
@@ -44,13 +50,6 @@ void App::start()
 
 	m_aspect = (float)m_window.getWidth() / (float)m_window.getHeight();
 	m_projection = glm::ortho(-m_aspect, m_aspect, -1.0f, 1.0f, -1.0f, 1.0f);
-	
-	shaderText.CompileShader("src/render/shaders/Text.vert", "src/render/shaders/Text.frag");
-	glm::mat4 projection = glm::ortho(0.0f, static_cast<float>(m_window.getWidth()), 0.0f, static_cast<float>(m_window.getHeight()));
-	shaderText.use();
-	glUniformMatrix4fv(glGetUniformLocation(shaderText.ID, "projection"), 1, GL_FALSE, glm::value_ptr(projection));
-
-	textClass.init("res/font/Orange Kid.otf", 250);
 }
 
 void App::run()
@@ -67,10 +66,11 @@ void App::run()
 		input(m_window.getWindow());
 
 		//update
+		//collision
 		if (m_count == true)
 		{
 			m_timer += m_deltaTime;
-			if (m_timer > 0.5)
+			if (m_timer > 0.2)
 			{
 				m_count = false;
 				m_timer = 0;
@@ -80,8 +80,8 @@ void App::run()
 		{
 			chectCollision(&ball, &player1);
 			chectCollision(&ball, &player2);
-			ball.windowCollision();
 		}
+		ball.windowCollision();
 
 		player1.windowCollision();
 		player2.windowCollision();
@@ -111,7 +111,6 @@ void App::run()
 
 		m_window.OnUpdate();
 		GameLogic();
-
 	}
 }
 
@@ -188,4 +187,3 @@ void App::GameLogic()
 		glfwSetWindowShouldClose(m_window.getWindow(), true);
 	}
 }
-

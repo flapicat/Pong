@@ -19,6 +19,12 @@ class TextClass
 {
 public:
 	TextClass();
+
+    void init(const char* fontPath, FT_UInt font_size);
+
+    void RenderText(Shader& shader, std::string text, float x, float y, float scale, glm::vec3 color);
+   
+private:
     struct Character {
         unsigned int TextureID; // ID handle of the glyph texture
         glm::ivec2   Size;      // Size of glyph
@@ -26,13 +32,7 @@ public:
         unsigned int Advance;   // Horizontal offset to advance to next glyph
     };
 
-
     std::map<GLchar, Character> Characters;
     unsigned int VAO, VBO;
-
-    void init(const char* fontPath, FT_UInt font_size);
-
-    void RenderText(Shader& shader, std::string text, float x, float y, float scale, glm::vec3 color);
-
 };
 

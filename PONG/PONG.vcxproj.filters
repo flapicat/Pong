@@ -10,6 +10,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\App.h" />
+    <ClInclude Include="src\TextClass.h" />
+    <ClInclude Include="src\UI.h" />
     <ClInclude Include="src\Window.h" />
     <ClInclude Include="src\entity\Ball.h">
       <Filter>entity</Filter>
@@ -18,9 +20,6 @@
       <Filter>entity</Filter>
     </ClInclude>
     <ClInclude Include="src\entity\Player.h">
-      <Filter>entity</Filter>
-    </ClInclude>
-    <ClInclude Include="src\entity\UI.h">
       <Filter>entity</Filter>
     </ClInclude>
     <ClInclude Include="src\render\EBO.h">
@@ -35,10 +34,11 @@
     <ClInclude Include="src\render\VBO.h">
       <Filter>render</Filter>
     </ClInclude>
-    <ClInclude Include="src\TextClass.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\App.cpp" />
+    <ClCompile Include="src\TextClass.cpp" />
+    <ClCompile Include="src\UI.cpp" />
     <ClCompile Include="src\Window.cpp" />
     <ClCompile Include="src\entity\Ball.cpp">
       <Filter>entity</Filter>
@@ -47,9 +47,6 @@
       <Filter>entity</Filter>
     </ClCompile>
     <ClCompile Include="src\entity\Player.cpp">
-      <Filter>entity</Filter>
-    </ClCompile>
-    <ClCompile Include="src\entity\UI.cpp">
       <Filter>entity</Filter>
     </ClCompile>
     <ClCompile Include="src\main.cpp" />
@@ -65,12 +62,5 @@
     <ClCompile Include="src\render\VBO.cpp">
       <Filter>render</Filter>
     </ClCompile>
-    <ClCompile Include="src\TextClass.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="src\render\shaders\shader.frag" />
-    <None Include="src\render\shaders\shader.vert" />
-    <None Include="src\render\shaders\Text.vert" />
-    <None Include="src\render\shaders\Text.frag" />
   </ItemGroup>
 </Project>

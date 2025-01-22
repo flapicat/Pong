@@ -28,7 +28,6 @@ private:
     int m_score = -1; 
     float m_speed = 3;
 
-
     float vertices[12] = {
        m_width,  m_height/2, 0.0f, // Top-right
       -m_width,  m_height/2, 0.0f, // Top-left

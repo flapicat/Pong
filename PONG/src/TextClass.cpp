@@ -5,7 +5,12 @@ TextClass::TextClass()
 }
 
 void TextClass::init(const char* fontPath,FT_UInt font_size)
-{// FreeType
+{
+
+    glEnable(GL_CULL_FACE);
+    glEnable(GL_BLEND);
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+    // FreeType
         // --------
     FT_Library ft;
     // All functions return a value different than 0 whenever an error occurred

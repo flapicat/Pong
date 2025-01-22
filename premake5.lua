@@ -5,7 +5,6 @@ workspace "Pong"
 	{
 		"Debug",
 		"Release",
-		"Dist"
 	}
 
 outputdir = "%{cfg.buildcfg}-%{cfg.system}-%{cfg.architecture}"
@@ -13,11 +12,9 @@ outputdir = "%{cfg.buildcfg}-%{cfg.system}-%{cfg.architecture}"
 IncludeDir = {}
 IncludeDir["GLFW"] = "vendor/GLFW/include"
 IncludeDir["Glad"] = "vendor/Glad/include"
-IncludeDir["imgui"] = "vendor/imgui"
 
 include "vendor/GLFW"
 include "vendor/Glad"
-include "vendor/imgui"
 
 project "Pong"
 	location "Pong"
@@ -36,18 +33,15 @@ project "Pong"
 	includedirs
 	{
 		"%{prj.name}/src",
-		"%{prj.name}/vendor/spdlog/include",
 		"%{prj.name}/vendor",
 		"%{IncludeDir.GLFW}",
 		"%{IncludeDir.Glad}",
-		"%{IncludeDir.imgui}"
 	}
 
 	links
 	{
 		"GLFW",
 		"Glad",
-		"imgui",
 		"opengl32.lib"
 	}
 	
@@ -59,7 +53,6 @@ project "Pong"
 
 		defines
 		{
-			"FL_PLATFORM_WINDOWS",
 			"GLFW_INCLUDE_NONE"
 		}
 
@@ -70,10 +63,5 @@ project "Pong"
 
 		filter "configurations:Release"
 			defines "FL_RELEASE"
-			buildoptions "/MT"
-			optimize "On"
-
-		filter "configurations:Dist"
-			defines "FL_DIST"
 			buildoptions "/MT"
 			optimize "On"

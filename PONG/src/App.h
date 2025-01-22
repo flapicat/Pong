@@ -13,7 +13,7 @@
 
 #include "entity/Ball.h"
 #include "entity/Player.h"
-#include "entity/UI.h"
+#include "UI.h"
 
 #include <ft2build.h>
 #include FT_FREETYPE_H
@@ -28,26 +28,32 @@ public:
 	void start();
 	void run();
 	void close();
+private:
+	void GameLogic();
 	void input(GLFWwindow* window);
 	void chectCollision(Ball* ball, Player* player);
 private:
+	//logic
 	bool gameEnd = false;
-	void GameLogic();
 	bool m_count = false;
 	float m_timer = 0;
-	float m_aspect;
-	glm::mat4 m_projection;
 	float m_deltaTime = 0, m_lastFrame = 0;
 
-	TextClass textClass;
+	//render
+	UI ui;
 	Shader shader;
 	Shader shaderText;
 
+	//window
 	Window m_window;
+	float m_aspect;
+	glm::mat4 m_projection;
 
-	UI ui;
-
+	//game
 	Player player1;
 	Player player2;
 	Ball ball;
+
+	//API
+	TextClass textClass;
 };
