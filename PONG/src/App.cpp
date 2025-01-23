@@ -11,6 +11,7 @@ void App::start()
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 4);
 	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 	
+	//WINDOW
 	m_window.createWindow();
 	if (m_window.getWindow() == NULL)
 	{
@@ -19,23 +20,27 @@ void App::start()
 		exit(-1);
 	}
 
+	//GLAD
 	if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
 	{
 		std::cout << "FAILED TO INIT GLAD\n";
 		exit(-1);
 	}
 
+	//GL ENABLE
 	glEnable(GL_DEPTH_BUFFER_BIT);
 	glEnable(GL_CULL_FACE);
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
+	//TEXT INIT
 	shaderText.CompileShader("src/render/shaders/Text.vert", "src/render/shaders/Text.frag");
 	glm::mat4 projection = glm::ortho(0.0f, static_cast<float>(m_window.getWidth()), 0.0f, static_cast<float>(m_window.getHeight()));
 	shaderText.use();
 	glUniformMatrix4fv(glGetUniformLocation(shaderText.ID, "projection"), 1, GL_FALSE, glm::value_ptr(projection));
 	textClass.init("res/font/Orange Kid.otf", 250);
 
+	//GAME OBJECTS INIT
 	shader.CompileShader("src/render/shaders/shader.vert", "src/render/shaders/shader.frag");
 	
 	ui.init();
@@ -48,69 +53,56 @@ void App::start()
 	player2.init();
 	player2.setPosition(glm::vec3(1.5, 0.0, 0.0));
 
+	//PROJECTION INIT
 	m_aspect = (float)m_window.getWidth() / (float)m_window.getHeight();
 	m_projection = glm::ortho(-m_aspect, m_aspect, -1.0f, 1.0f, -1.0f, 1.0f);
 }
 
 void App::run()
 {
-	while (gameEnd == false)
+	while (!glfwWindowShouldClose(m_window.getWindow()))
 	{
+		//DELTA TIME
 		float currentFrame = glfwGetTime();
 		m_deltaTime = currentFrame - m_lastFrame;
 		m_lastFrame = currentFrame;
 
+		//CLEAR
 		glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
+		//GAME
 		input(m_window.getWindow());
 
-		//update
-		//collision
-		if (m_count == true)
+		if (gameEnd == true)
 		{
-			m_timer += m_deltaTime;
-			if (m_timer > 0.2)
-			{
-				m_count = false;
-				m_timer = 0;
-			}
+			//WHICH PLAYER WIN RENDER
+			if (player1.getScore() > player2.getScore())
+				textClass.RenderText(shaderText, "PLAYER 1 WIN", m_window.getWidth() / 7, m_window.getHeight() / 2, 1.0f, glm::vec3(1.0f, 1.0f, 1.0f));
+			if (player1.getScore() < player2.getScore())
+				textClass.RenderText(shaderText, "PLAYER 2 WIN", m_window.getWidth() / 7, m_window.getHeight() / 2, 1.0f, glm::vec3(1.0f, 1.0f, 1.0f));
 		}
-		if (m_timer == 0)
+		else
 		{
-			chectCollision(&ball, &player1);
-			chectCollision(&ball, &player2);
+			GameLogic();
+
+			//UPDATE
+			player1.windowCollision();
+			player2.windowCollision();
+			ball.OnUpdate(m_deltaTime);
+
+			//RENDER
+			shader.use();
+			shader.setMat4("projection", m_projection);
+
+			ui.middleLine(shader);
+			player1.render(shader);
+			player2.render(shader);
+			ball.render(shader);
+			renderText();
 		}
-		ball.windowCollision();
-
-		player1.windowCollision();
-		player2.windowCollision();
-
-		//ball
-		ball.OnUpdate(m_deltaTime);
-
-		//render
-
-		shader.use();
-		shader.setMat4("projection", m_projection);
-
-		ui.middleLine(shader);
-
-		player1.render(shader);
-		player2.render(shader);
-
-		ball.render(shader);
-
-		char Player1Points[32];
-		itoa(player1.getScore(), Player1Points, 10);
-		textClass.RenderText(shaderText, Player1Points, m_window.getWidth() / 4, (m_window.getHeight() / 5) * 4, 1.0f, glm::vec3(1.0f, 1.0f, 1.0f));
-
-		char Player2Points[32];
-		itoa(player2.getScore(), Player2Points, 10);
-		textClass.RenderText(shaderText, Player2Points, (m_window.getWidth() / 4) * 3, (m_window.getHeight() / 5) * 4, 1.0f, glm::vec3(1.0f, 1.0f, 1.0f));
 
 		m_window.OnUpdate();
-		GameLogic();
 	}
 }
 
@@ -122,7 +114,7 @@ void App::input(GLFWwindow* window)
 		glfwSetWindowShouldClose(window, true);
 	}
 
-	//PLAYER1
+	//PLAYER 1 INPUT
 	if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
 	{
 		player1.processInput(UP, m_deltaTime);
@@ -132,7 +124,18 @@ void App::input(GLFWwindow* window)
 		player1.processInput(DOWN, m_deltaTime);
 	}
 
-	//PLAYER2
+	//DEV INPUT
+	// 
+	//if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS)
+	//{
+	//	player1.processInput(LEFT, m_deltaTime);
+	//}
+	//if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
+	//{
+	//	player1.processInput(RIGHT, m_deltaTime);
+	//}
+
+	//PLAYER2 2 INPUT
 	if (glfwGetKey(window, GLFW_KEY_UP) == GLFW_PRESS)
 	{
 		player2.processInput(UP, m_deltaTime);
@@ -145,45 +148,144 @@ void App::input(GLFWwindow* window)
 
 void App::chectCollision(Ball* ball, Player* player)
 {
-	bool collisionX = ball->getPosition().x + ball->m_height/2 >= player->getPosition().x - player->m_width /2 &&
-		              player->getPosition().x + player->m_width/2 >= ball->getPosition().x - ball->m_height /2;
-	
-	bool collisionY = ball->getPosition().y + ball->m_height/2 >= player->getPosition().y - player->m_height /2 &&
-		              player->getPosition().y + player->m_height/2 >= ball->getPosition().y - ball->m_height /2;
+	//-------------------------------------------------
+	// ORGINAL COLLISION
+	// ------------------------------------------------
+	//bool collisionX = ball->getPosition().x + ball->m_height/2 >= player->getPosition().x - player->m_width /2 &&
+	//	              player->getPosition().x + player->m_width/2 >= ball->getPosition().x - ball->m_height /2;
+	//
+	//bool collisionY = ball->getPosition().y + ball->m_height/2 >= player->getPosition().y - player->m_height /2 &&
+	//	              player->getPosition().y + player->m_height/2 >= ball->getPosition().y - ball->m_height /2;
+	//
+	//if (collisionX && collisionY)
+	//{
+	//	m_count = true;
+	//	ball->swapVelX();
+	//	std::cout << "BOUNCE\n";
+	//}
 
-	if (collisionX && collisionY)
+	//-------------------------------------------------
+	// ACTUAL COLLISION
+	// ------------------------------------------------
+	
+	//top half player collision
+	bool collisionTopX = ball->getPosition().x + ball->m_height / 2 >= player->getPosition().x - player->m_width &&
+		player->getPosition().x + player->m_width >= ball->getPosition().x - ball->m_height / 2;
+
+	bool collisionTopY = ball->getPosition().y + ball->m_height / 2 >= player->getPosition().y + player->m_height / 8 &&
+		player->getPosition().y + player->m_height / 2 >= ball->getPosition().y - ball->m_height / 2;
+
+	if (collisionTopX && collisionTopY)
 	{
-		m_count = true;
+		m_BPcolCount = true;
 		ball->swapVelX();
+		ball->setVelY(1);
+		return;
 	}
+
+	//bottom half player colision
+	bool collisionBotX = ball->getPosition().x + ball->m_height / 2 >= player->getPosition().x - player->m_width &&
+		player->getPosition().x + player->m_width >= ball->getPosition().x - ball->m_height / 2;
+
+	bool collisionBotY = ball->getPosition().y + ball->m_height / 2 >= player->getPosition().y - player->m_height / 2 &&
+		player->getPosition().y + player->m_height / 8 >= ball->getPosition().y - ball->m_height / 8;
+
+	if (collisionBotX && collisionBotY)
+	{
+		m_BPcolCount = true;
+		ball->swapVelX();
+		ball->setVelY(-1);
+		return;
+	}
+}
+
+void App::renderText()
+{
+	//PLAYER 1 POINTS
+	char Player1Points[32];
+	itoa(player1.getScore(), Player1Points, 10);
+	textClass.RenderText(shaderText, Player1Points, m_window.getWidth() / 4, (m_window.getHeight() / 5) * 4, 1.0f, glm::vec3(1.0f, 1.0f, 1.0f));
+
+	//PLAYER 2 POINTS
+	char Player2Points[32];
+	itoa(player2.getScore(), Player2Points, 10);
+	textClass.RenderText(shaderText, Player2Points, (m_window.getWidth() / 4) * 3, (m_window.getHeight() / 5) * 4, 1.0f, glm::vec3(1.0f, 1.0f, 1.0f));
+
 }
 
 void App::close()
 {
+	//IT ONLY LOOKS GOOD BUT DOES ALMOST NOTHING 
 	m_window.TerminateWindow();
 	glfwTerminate();
 }
 
 void App::GameLogic()
 {
+	//-------------------------------------------------
+	//BALL-PLAYER COLLISION
+	//-------------------------------------------------
+	if (m_BPcolCount == true)
+	{
+		m_BPcolTimer += m_deltaTime;
+		if (m_BPcolTimer > 0.2)
+		{
+			m_BPcolCount = false;
+			m_BPcolTimer = 0;
+		}
+	}
+	if (m_BPcolTimer == 0)
+	{
+		chectCollision(&ball, &player1);
+		chectCollision(&ball, &player2);
+	}
+
+	//-------------------------------------------------
+	//BALL-WINDOW COLLISION
+	//-------------------------------------------------
+	if (m_BPcolTimer == true)
+	{
+		m_WindowColTimer += m_deltaTime;
+		if (m_WindowColTimer > 0.2)
+		{
+			m_BPcolTimer = false;
+			m_WindowColTimer = 0;
+		}
+	}
+	if (m_WindowColTimer == 0)
+	{
+		ball.windowCollision();
+	}
+
+	//-------------------------------------------------
+	//ADD SCORE
+	//-------------------------------------------------
 	if (ball.getLeftCol())
 	{
-		player2.addScore();
+		player1.addScore();
 		ball.setLeftCol(false);
 	}
 	if (ball.getRightCol())
 	{
-		player1.addScore();
+		player2.addScore();
 		ball.setRightCol(false);
 	}
+
+	//-------------------------------------------------
+	//END GAME CHECK
+	//-------------------------------------------------
 	if (player1.getScore() == 15)
 	{
 		gameEnd = true;
-		glfwSetWindowShouldClose(m_window.getWindow(), true);
 	}
 	if (player2.getScore() == 15)
 	{
 		gameEnd = true;
-		glfwSetWindowShouldClose(m_window.getWindow(), true);
 	}
 }
+
+//TODO:
+//DISPLAY TEXT WHICH PLAYER WIN
+//FIX SMALL BUGS 
+//REDUSE USLESS VARIABLES AND FUNCTIONS
+//CREATE BUILD SYSTEM

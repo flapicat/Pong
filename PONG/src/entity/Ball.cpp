@@ -34,6 +34,16 @@ float Ball::getVelY()
 	return m_velocityY;
 }
 
+void Ball::setVelX(float x)
+{
+	m_velocityX = x;
+}
+
+void Ball::setVelY(float y)
+{
+	m_velocityY = y;
+}
+
 void Ball::swapVelX()
 {
 	m_velocityX *= -1;

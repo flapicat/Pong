@@ -28,6 +28,14 @@ void Player::processInput(MOVES action, float deltaTme)
 	{
 		m_position.y += -1 * m_speed * deltaTme;
 	}
+	if (action == LEFT)
+	{
+		m_position.x += -1 * m_speed * deltaTme;
+	}
+	if (action == RIGHT)
+	{
+		m_position.x += 1 * m_speed * deltaTme;
+	}
 }
 
 void Player::windowCollision()

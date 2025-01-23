@@ -7,6 +7,8 @@ enum MOVES
 {
     UP,
     DOWN,
+    RIGHT,
+    LEFT
 };
 
 class Player : public Entity

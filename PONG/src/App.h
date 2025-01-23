@@ -33,10 +33,16 @@ private:
 	void input(GLFWwindow* window);
 	void chectCollision(Ball* ball, Player* player);
 private:
-	//logic
+	void renderText();
+private:
+	//bools
 	bool gameEnd = false;
-	bool m_count = false;
-	float m_timer = 0;
+	bool m_BPcolCount = false;
+	bool m_WindowColCount = false;
+	//timers
+	float m_BPcolTimer = 0;
+	float m_WindowColTimer = 0;
+
 	float m_deltaTime = 0, m_lastFrame = 0;
 
 	//render

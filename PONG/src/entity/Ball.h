@@ -13,6 +13,8 @@ public:
 
     float getVelX();
     float getVelY();
+    void setVelX(float x);
+    void setVelY(float y);
     void swapVelX();
     void swapVelY();
 
@@ -28,7 +30,7 @@ private:
 private:
     bool m_leftCOL, m_rightCOL;
     float m_velocityX = 1,m_velocityY= 1;
-    float m_speed = 1;
+    float m_speed = 1.7f;
 
     float vertices[12] = {
        m_height / 2,  m_height / 2, 0.0f, // Top-right
