@@ -100,6 +100,11 @@ void Ball::windowCollision()
 	}
 }
 
+float Ball::getHeight()
+{
+	return m_height;
+}
+
 void Ball::render(Shader& shader)
 {
 	glm::mat4 transform = glm::mat4(1.0f);

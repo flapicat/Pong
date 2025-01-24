@@ -11,6 +11,8 @@ public:
     void OnUpdate(float deltaTime);
     void windowCollision();
 
+    float getHeight();
+
     float getVelX();
     float getVelY();
     void setVelX(float x);
@@ -25,12 +27,12 @@ public:
 
     virtual void render(Shader& shader) override;
 
-    float m_height = 0.1f;
 private:
 private:
     bool m_leftCOL, m_rightCOL;
     float m_velocityX = 1,m_velocityY= 1;
     float m_speed = 1.7f;
+    float m_height = 0.05f;
 
     float vertices[12] = {
        m_height / 2,  m_height / 2, 0.0f, // Top-right

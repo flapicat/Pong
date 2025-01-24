@@ -21,6 +21,7 @@ public:
     void windowCollision();
 
     int getScore();
+    void setScore(int x);
     void addScore();
 
 	virtual void render(Shader& shader) override;

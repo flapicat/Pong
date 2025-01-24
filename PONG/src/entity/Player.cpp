@@ -55,6 +55,11 @@ int Player::getScore()
 	return m_score;
 }
 
+void Player::setScore(int x)
+{
+	m_score = x;
+}
+
 void Player::addScore()
 {
 	m_score++;

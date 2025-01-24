@@ -36,12 +36,14 @@ private:
 	void renderText();
 private:
 	//bools
-	bool gameEnd = false;
+	bool m_gameEnd = false;
 	bool m_BPcolCount = false;
 	bool m_WindowColCount = false;
+	bool m_StartTimerCount = true;
 	//timers
 	float m_BPcolTimer = 0;
 	float m_WindowColTimer = 0;
+	float m_StartTimer = 3.99;
 
 	float m_deltaTime = 0, m_lastFrame = 0;
 
@@ -60,6 +62,7 @@ private:
 	Player player2;
 	Ball ball;
 
-	//API
-	TextClass textClass;
+	//TEXT
+	TextClass ScoreText;
+	TextClass infoText;
 };
