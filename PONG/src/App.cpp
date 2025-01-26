@@ -77,8 +77,10 @@ void App::run()
 
 		if (m_gameEnd == true)
 		{
+			//INFO RENDER
 			infoText.RenderText(shaderText, "PRESS ESC TO QUIT", 10, m_window.getHeight() - 50, 1.0f, glm::vec3(1.0f, 1.0f, 1.0f));
 			infoText.RenderText(shaderText, "PRESS R TO RESET", 10, m_window.getHeight() - 100, 1.0f, glm::vec3(1.0f, 1.0f, 1.0f));
+
 			//WHICH PLAYER WIN RENDER
 			if (player1.getScore() > player2.getScore())
 				ScoreText.RenderText(shaderText, "PLAYER 1 WIN", m_window.getWidth() / 7, m_window.getHeight() / 2, 1.0f, glm::vec3(1.0f, 1.0f, 1.0f));
@@ -87,7 +89,6 @@ void App::run()
 		}
 		else
 		{
-			GameLogic();
 
 			if (m_StartTimerCount == true)
 			{
@@ -96,7 +97,7 @@ void App::run()
 					m_StartTimerCount = false;
 				else
 				{
-					char StartTimer[1];
+					char StartTimer[2];
 					itoa((int)m_StartTimer, StartTimer, 10);
 					ScoreText.RenderText(shaderText, StartTimer, m_window.getWidth() / 2 - 50, m_window.getHeight() / 2 - 50, 1.0f, glm::vec3(1.0f, 1.0f, 1.0f));
 				}
@@ -123,6 +124,7 @@ void App::run()
 		}
 
 		m_window.OnUpdate();
+		GameLogic();
 	}
 }
 
@@ -284,7 +286,7 @@ void App::GameLogic()
 	if (m_WindowColCount == true)
 	{
 		m_WindowColTimer += m_deltaTime;
-		if (m_WindowColTimer > 0.5)
+		if (m_WindowColTimer > 1)
 		{
 			m_WindowColCount = false;
 			m_WindowColTimer = 0;
@@ -312,19 +314,16 @@ void App::GameLogic()
 	//-------------------------------------------------
 	//END GAME CHECK
 	//-------------------------------------------------
-	if (player1.getScore() == 1) //DEV TEMP
+	if (player1.getScore() == 15)
 	{
 		m_gameEnd = true;
 	}
-	if (player2.getScore() == 1) //DEV TEMP
+	if (player2.getScore() == 15)
 	{
 		m_gameEnd = true;
 	}
 }
 
 //TODO:
-//FIX SMALL BUGS 
 //REDUSE USLESS VARIABLES AND FUNCTIONS REDUSE GLOBALS
 //CREATE BUILD SYSTEM THAT LINK EVERY LIBRARY AND HEADERS, ALSO NEED TO COPY SHADERS AND RESOURSE FOLDERS TO BINARY FOLDER
-//RECREATE TEXT CLASS, PASSING FONT SIZE IN TEXTREDER FUNCTION ???
-//APP CRASH AFTER WINDOW CLOSE CALL

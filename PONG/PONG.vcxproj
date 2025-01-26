@@ -67,6 +67,10 @@
       <LanguageStandard>stdcpp17</LanguageStandard>
       <ExternalWarningLevel>Level3</ExternalWarningLevel>
     </ClCompile>
+    <CustomBuildStep>
+      <Command>xcopy /Q /E /Y /I ..\PONG\res ..\bin\Debug-windows-x86_64\Pong\res
+xcopy /Q /E /Y /I ..\PONG\shaders ..\bin\Debug-windows-x86_64\Pong\shaders</Command>
+    </CustomBuildStep>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -89,6 +93,10 @@
       <LanguageStandard>stdcpp17</LanguageStandard>
       <ExternalWarningLevel>Level3</ExternalWarningLevel>
     </ClCompile>
+    <CustomBuildStep>
+      <Command>xcopy /Q /E /Y /I ..\PONG\res ..\bin\Release-windows-x86_64\Pong\res
+xcopy /Q /E /Y /I ..\PONG\shaders ..\bin\Release-windows-x86_64\Pong\shaders</Command>
+    </CustomBuildStep>
     <Link>
       <SubSystem>Console</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
@@ -130,15 +138,6 @@
     <ProjectReference Include="..\vendor\Glad\Glad.vcxproj">
       <Project>{BDD6857C-A90D-870D-52FA-6C103E10030F}</Project>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="shaders\shader.frag" />
-    <None Include="shaders\shader.vert" />
-    <None Include="shaders\Text.frag" />
-    <None Include="shaders\Text.vert" />
-  </ItemGroup>
-  <ItemGroup>
-    <Font Include="res\font\Orange Kid.otf" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

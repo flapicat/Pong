@@ -63,13 +63,4 @@
       <Filter>render</Filter>
     </ClCompile>
   </ItemGroup>
-  <ItemGroup>
-    <None Include="shaders\shader.frag" />
-    <None Include="shaders\shader.vert" />
-    <None Include="shaders\Text.frag" />
-    <None Include="shaders\Text.vert" />
-  </ItemGroup>
-  <ItemGroup>
-    <Font Include="res\font\Orange Kid.otf" />
-  </ItemGroup>
 </Project>

@@ -24,11 +24,9 @@ project "Pong"
 	targetdir ("bin/" .. outputdir .. "/%{prj.name}")
 	objdir ("bin-int/" .. outputdir .. "/%{prj.name}")
 
-	files
-	{
-		"%{prj.name}/src/**.h",
-		"%{prj.name}/src/**.cpp",
-	}
+	
+
+	files{ "%{prj.name}/src/**.h" , "%{prj.name}/src/**.cpp"}
 
 	includedirs
 	{
