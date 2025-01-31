@@ -24,8 +24,6 @@ project "Pong"
 	targetdir ("bin/" .. outputdir .. "/%{prj.name}")
 	objdir ("bin-int/" .. outputdir .. "/%{prj.name}")
 
-	
-
 	files{ "%{prj.name}/src/**.h" , "%{prj.name}/src/**.cpp"}
 
 	includedirs
@@ -62,4 +60,4 @@ project "Pong"
 		filter "configurations:Release"
 			defines "FL_RELEASE"
 			buildoptions "/MT"
-			optimize "On"
+			optimize "On"			
