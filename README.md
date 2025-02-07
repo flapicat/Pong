@@ -5,7 +5,7 @@ This is my first ever comleted game so code is basically garbage.
 # Building and running
 Officially support Windows 10/11 and visual studio 2022.
 1. Clone repository
-2. Run generate.bat
+2. Run `generate.bat`
 3. Open Pong.sln and hit F5
 
 # 3rd party libaries
