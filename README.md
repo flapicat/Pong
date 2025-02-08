@@ -1,6 +1,6 @@
 # Pong
-Pong is old arcade game that I build with OpenGL and freetype.
-This is my first ever comleted game so code is basically garbage.
+Pong is old arcade game that I recreate with OpenGL and freetype.
+This is my first ever comleted game so code is basically garbage with a lot of bugs.
 
 # Building and running
 Officially support Windows 10/11 and visual studio 2022.
